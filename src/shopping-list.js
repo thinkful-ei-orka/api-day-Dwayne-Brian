@@ -91,16 +91,26 @@ const handleEditShoppingItemSubmit = function () {
     event.preventDefault();
     const id = getItemIdFromElement(event.currentTarget);
     const itemName = $(event.currentTarget).find('.shopping-item').val();
-    store.findAndUpdateName(id, itemName);
+    api.updateItem(id, {name: itemName})
+    .then(res => res.json())
+    .then(() => {
+      store.findAndUpdate(id, {name: itemName})
     render();
+    });
   });
 };
 
 const handleItemCheckClicked = function () {
   $('.js-shopping-list').on('click', '.js-item-toggle', event => {
     const id = getItemIdFromElement(event.currentTarget);
-    store.findAndToggleChecked(id);
+    let item = store.findById(id)
+
+    api.updateItem(id, {checked: !item.checked})
+    .then(res => res.json())
+    .then(() => {
+      store.findAndUpdate(id, {checked: !item.checked})
     render();
+    });
   });
 };
 

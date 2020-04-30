@@ -20,11 +20,16 @@ const main = function () {
     .then(res => res.json())
     .then(() => console.log('updated!'));
   
-    api.getItems()
+  api.getItems()
   .then(res => res.json())
   .then((items) => {
     items.forEach((item) => store.addItem(item));
     shoppingList.render();
+
+  const item = store.items[0];
+  console.log('current name: ' + item.name);
+  store.findAndUpdate(item.id, { name: 'barbaz' });
+  console.log('new name: ' + item.name);
   });
 
   
