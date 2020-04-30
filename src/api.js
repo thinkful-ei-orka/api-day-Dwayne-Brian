@@ -1,3 +1,4 @@
+import store from './store';
 
 const BASE_URL = 'https://thinkful-list-api.herokuapp.com/victor-brian/';
 
@@ -10,14 +11,15 @@ function createItem(name) {
     let newItem = {
         name 
     };
-
     return fetch(`${BASE_URL}items`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(newItem)
-    });
+    })
+    .catch(error => alert('Something went wrong. Try again later.')
+    );
 }
 
 function updateItem(id, updateData){
@@ -28,11 +30,22 @@ function updateItem(id, updateData){
             'Content-Type': 'application/json'
         },
         body: stringData
-    });
+    })
+    .catch(error => alert('Something went wrong. Try again later.')
+    );
+}
+
+function itemDelete(id) {
+    return fetch(`${BASE_URL}items/${id}`, {
+        method: 'DELETE'
+    })
+    .catch(error => alert('Something went wrong. Try again later.')
+    );
 }
 
 export default {
 getItems,
 createItem,
-updateItem
+updateItem,
+itemDelete
 };

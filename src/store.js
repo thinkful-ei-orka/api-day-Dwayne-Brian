@@ -1,6 +1,8 @@
 const items = [];
 let hideCheckeditems = false;
 
+//const callError = false;
+
 const findById = function (id) {
   return this.items.find(currentItem => currentItem.id === id);
 };
@@ -38,9 +40,12 @@ const toggleCheckedFilter = function () {
   this.hideCheckedItems = !this.hideCheckedItems;
 };
 
+
+
 export default {
   items,
   hideCheckeditems,
+  //callError,
   findById,
   addItem,
   //findAndToggleChecked,

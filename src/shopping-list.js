@@ -33,6 +33,7 @@ const generateShoppingItemsString = function (shoppingList) {
 };
 
 const render = function () {
+  let callError = store.callError;
   // Filter item list if store prop is true by item.checked === false
   let items = [...store.items];
   if (store.hideCheckedItems) {
@@ -43,7 +44,7 @@ const render = function () {
   const shoppingListItemsString = generateShoppingItemsString(items);
 
   // insert that HTML into the DOM
-  $('.js-shopping-list').html(shoppingListItemsString);
+$('.js-shopping-list').html(shoppingListItemsString);
 };
 
 const handleNewItemSubmit = function () {
@@ -53,7 +54,7 @@ const handleNewItemSubmit = function () {
     $('.js-shopping-list-entry').val('');
   
   api.createItem(newItemName)
-    .then(res=>res.json())
+    .then(res => res.json())
     .then((newItem)=> {
       store.addItem(newItem);
       render();
@@ -80,9 +81,13 @@ const handleDeleteItemClicked = function () {
     // get the index of the item in store.items
     const id = getItemIdFromElement(event.currentTarget);
     // delete the item
-    store.findAndDelete(id);
+    api.itemDelete(id)
+    .then(res => res.json())
+    .then(() => {
+      store.findAndDelete(id)
     // render the updated shopping list
     render();
+    });    
   });
 };
 
